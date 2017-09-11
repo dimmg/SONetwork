@@ -34,27 +34,33 @@ class PostViewSet(viewsets.ModelViewSet):
 class PostRatingViewSet(viewsets.ViewSet):
     @detail_route(methods=['post'])
     def like(self, request, pk=None):
-        exists, post_rating = self._get_or_prepare(pk, request.user)
+        post = get_object_or_404(Post, pk=pk)
+
+        exists, post_rating = self._get_or_prepare(post, request.user)
         if not exists or post_rating is False:
             post_rating.positive = True
             post_rating.save()
 
-        return Response({})
+        serializer = PostSerializer(post)
+
+        return Response(serializer.data)
 
     @detail_route(methods=['post'])
     def dislike(self, request, pk=None):
-        exists, post_rating = self._get_or_prepare(pk, request.user)
+        post = get_object_or_404(Post, pk=pk)
+
+        exists, post_rating = self._get_or_prepare(post, request.user)
         if not exists or post_rating.positive is True:
             post_rating.positive = False
             post_rating.save()
 
-        return Response({})
+        serializer = PostSerializer(post)
 
-    def _get_or_prepare(self, post_pk=None, user=None):
-        post = get_object_or_404(Post, pk=post_pk)
+        return Response(serializer.data)
 
+    def _get_or_prepare(self, post, user):
         try:
-            exists, post_rating = True, PostRating.objects.get(post=post_pk, user=user)
+            exists, post_rating = True, PostRating.objects.get(post=post, user=user)
         except PostRating.DoesNotExist:
             exists, post_rating = False, PostRating(post=post, user=user)
 
