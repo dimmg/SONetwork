@@ -10,6 +10,9 @@ from .serializers import PostSerializer
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    """
+    Posts management ModelViewSet.
+    """
     serializer_class = PostSerializer
     queryset = Post.objects.all()
     permission_classes = (IsAuthenticated, IsOwnerOnNonSafeMethods,)
@@ -32,6 +35,11 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class PostRatingViewSet(viewsets.ViewSet):
+    """
+    PostRating ViewSet.
+    Allows to like / dislike a specific Post. 
+    """
+
     @detail_route(methods=['post'])
     def like(self, request, pk=None):
         post = get_object_or_404(Post, pk=pk)
@@ -59,6 +67,13 @@ class PostRatingViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def _get_or_prepare(self, post, user):
+        """
+        Returns a PostRating object with the provided details if exists,
+        otherwise an instance of PostRating object.
+        :param post: Post object instance
+        :param user: User object instance
+        :return: PostRating object
+        """
         try:
             exists, post_rating = True, PostRating.objects.get(post=post, user=user)
         except PostRating.DoesNotExist:

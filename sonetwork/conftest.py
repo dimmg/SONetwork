@@ -4,6 +4,13 @@ from django.test import Client, TestCase
 
 
 class CustomClient(Client):
+    """
+    Overrode Django TestClient.
+    Sets the value of `Content-Type` header to `application/json`
+    for `PUT` and `PATCH` requests and converts the request 
+    payload to JSON.
+    """
+
     def post(self, path, data=None, content_type='application/json',
              follow=False, secure=False, **extra):
         return super().post(path, json.dumps(data), content_type, follow, secure, **extra)

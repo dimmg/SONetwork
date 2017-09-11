@@ -8,6 +8,9 @@ from .serializers import UserSerializer
 class UserViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin, mixins.ListModelMixin,
                   viewsets.GenericViewSet):
+    """
+    Users management ViewSet.
+    """
     serializer_class = UserSerializer
     queryset = get_user_model().objects.all()
     permission_classes = (CustomUserPermissions,)

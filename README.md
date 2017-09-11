@@ -19,7 +19,7 @@ Used Technologies:
 - Clone the repository and and `cd` into it 
 
 ```
-$ git clone git@github.com/dimmg/sonetwork.git
+$ git clone git@github.com/dimmg/SONetwork.git
 $ cd sonetwork
 ```
 
@@ -46,13 +46,7 @@ $ source env/bin/activate
 - Export the environment variables and run the server that will run by default on port `:8000`
 
 ```
-# hunter.io api key
-(env) $ HUNTER_API_KEY={{API_KEY}}
-
-# clearbit.com api key
-(env) $ CLEARBIT_API_KEY={{API_KEY}}
-
-(env) $ python manage.py runserver
+(env) $ HUNTER_API_KEY={{API_KEY}} CLEARBIT_API_KEY={{API_KEY}} python manage.py runserver
 ```
 
 #### Result

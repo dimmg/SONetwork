@@ -4,6 +4,10 @@ from django.db import models
 
 
 class UserManager(BaseUserManager):
+    """
+    Custom UserManager that allows to use the 
+    `email` field as primary identifier for an account.
+    """
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):

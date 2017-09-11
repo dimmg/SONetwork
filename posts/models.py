@@ -10,6 +10,10 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def rating(self):
+        """
+        Returns the rating for the current Post.
+        :rtype: int 
+        """
         positive = PostRating.objects.filter(post=self, positive=True).count()
         negative = PostRating.objects.filter(post=self, positive=False).count()
 
