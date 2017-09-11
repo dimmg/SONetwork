@@ -146,3 +146,4 @@ JWT_AUTH = {
 # API Keys
 
 HUNTER_API_KEY = os.environ.get('HUNTER_API_KEY')
+CLEARBIT_API_KEY = os.environ.get('CLEARBIT_API_KEY')

@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from .services import HunterService
+from .services import ClearBitService, HunterService
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -13,6 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'bio', 'email', 'first_name', 'gender', 'last_name', 'joined_at', 'password')
 
     def create(self, validated_data):
+        account_details = ClearBitService.get_details_for_email(validated_data['email'])
+        validated_data = {**account_details, **validated_data}
+
         user = get_user_model()(**validated_data)
 
         password = validated_data.get('password')
