@@ -35,8 +35,9 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
     def validate_email(self, value):
-        # if not HunterService.is_valid_email(value):
-        #    raise serializers.ValidationError('Invalid email, please use a valid one!')
+
+        if not HunterService.is_valid_email(value):
+            raise serializers.ValidationError('invalid, please use a valid one!')
         return value
 
     def validate_password(self, value):
